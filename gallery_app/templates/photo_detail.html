@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Photo Detail{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">{{ photo.title }}</h1>
+    <img src="{{ photo.uploaded_photo.url }}" alt="{{ photo.title }}" class="img-fluid mb-4" style="max-width: 100%; height: auto;">
+    <p class="mb-3">{{ photo.description }}</p>
+
+    <h4 class="mb-4">
+        <strong>Tags:</strong>
+        {% for tag in photo.tags.all %}
+            <span class="badge bg-secondary">{{ tag.name }}</span>
+        {% endfor %}
+    </h4>
+
+    <div class="d-flex align-items-center mb-4">
+        <form action="{% url 'like_photo' photo.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn mr-2 ">❤ Like</button>
+        </form>
+        <span class="ms-2 me-4">{{ photo.total_likes }} Likes</span>
+
+        <form action="{% url 'dislike_photo' photo.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn  mr-2">❌ Dislike</button>
+        </form>
+        <span class="ms-2">{{ photo.total_dislikes }} Dislikes</span>
+    </div>
+
+    <a href="{% url 'index' %}" class="btn btn-primary">Back to Gallery</a>
+</div>
+{% endblock %}

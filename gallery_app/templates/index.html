@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% if user.is_authenticated %}
+<h2 class="mt-4">Welcome, {{user.username}}</h2>
+{% endif %}
+<form method="get" action="{% url 'index' %}" class="mb-4">
+    <label for="tag" style="font-size: 1.3rem;">Filter by Tag: </label>
+    <select name="tag" id="tag" class="w-25 text-center" style="height: 2.3rem;">
+      <option value="">--All Tags--</option>
+      {% for tag in tags %}
+        <option value="{{ tag.name }}" {% if request.GET.tag == tag.name %}selected{% endif %}>{{ tag.name }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit" style="width: 6rem;" class="btn btn-primary">Filter</button>
+  </form>
+    
+  <div class="mx-auto max-w-7xl flex px-4 py-6 sm:px-6 lg:px-8">
+    <ul class="d-flex flex-wrap gap-4 list-unstyled p-0">
+                {% for photo in photos %}
+        <li class="mb-2 shadow-lg p-4">
+          <img src="{{ photo.uploaded_photo.url }}" alt="{{ photo.title }}" style="width: 800px;" class="h-auto img-fluid mb-4">
+          <h3 class="text-xl font-semibold">{{ photo.title }}</h3>
+          <p class="text-sm text-gray-600">
+            {% for tag in photo.tags.all %}
+              {{ tag.name }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+          </p>
+          <div class="d-flex">
+            <form action="{% url 'like_photo' photo.id %}" method="post" style="display: inline;">
+                {% csrf_token %}
+            <button class="btn like-btn mr-2" data-id="{{ photo.id }}">❤</button> 
+            </form>
+            <span class="mt-2" id="like-count-{{ photo.id }}"> {{ photo.total_likes }} Likes</span> 
+
+            <form action="{% url 'dislike_photo' photo.id %}" method="post" style="display: inline;">
+                {% csrf_token %}
+            <button class="btn dislike-btn mr-2 ms-3" data-id="{{ photo.id }}">❌</button>
+            </form>
+            <span class="mt-2" id="dislike-count-{{ photo.id }}">{{ photo.total_dislikes }} Dislikes</span> 
+
+        </div>
+
+        <h5 class="mt-2">
+            <a href="{% url 'photo_detail' photo.id %}" class="btn btn-link">Learn More ⏩</a>
+        </h5>
+        </li>
+      {% empty %}
+        <p>No photos available for this tag.</p>
+      {% endfor %}
+    </ul>
+  </div>
+    {% endblock %}

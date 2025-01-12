@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Photo Gallery | Add Photo{% endblock %}
+
+{% block body %}
+<div class="py-4 mt-auto">
+    <div class="container px-4">
+        <div class="d-flex justify-content-center">
+            <h3>Add Photo</h3>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="text-center text-danger pt-1 pb-2">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="card bg-light mb-3">
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="id_title" class="form-label mt-4">Title</label>
+                                <input type="text" name="title" id="id_title" placeholder="Enter photo title"
+                                       class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_description" class="form-label mt-4">Description</label>
+                                <textarea name="description" id="id_description" rows="4"
+                                          placeholder="Enter photo description" class="form-control"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_tags" class="form-label mt-4">Tags (comma separated)</label>
+                                <input type="text" name="tags" id="id_tags" placeholder="Enter tags separated by commas"
+                                       class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_uploaded_photo" class="form-label mt-4">Upload Photo</label>
+                                <input type="file" name="uploaded_photo" id="id_uploaded_photo" class="form-control" required>
+                            </div>
+
+                            <div class="form-group mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Add Photo
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="mt-2">
+                            <a href="{% url 'index' %}" class="btn btn-link">Back to Gallery</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

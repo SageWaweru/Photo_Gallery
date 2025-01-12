@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-center">
+        <h3>Edit Profile</h3>
+    </div>
+    
+    <div class='row'>
+        <div class='col-lg-6 offset-lg-3'>
+            <div class='card bg-light mb-3'>
+                <div class='card-body'>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class='form-group'>
+                            <label for="id_bio" class='form-label mt-4'>Bio:</label>
+                            <textarea name="bio" id="id_bio" class="form-control">{{ form.bio.value }}</textarea>
+                        </div>
+                        
+                        <div class='form-group'>
+                            <label for="id_profile_picture" class='form-label mt-4'>Profile Picture:</label>
+                            <input type="file" name="profile_picture" id="id_profile_picture" class="form-control">
+                        </div>
+                                                
+                        <div class='form-group mt-4 d-flex '>
+                            <button type="submit" class="btn btn-primary mr-2">Save Changes</button>
+                            <a href="{% url 'profile' %}" class="btn btn-danger">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

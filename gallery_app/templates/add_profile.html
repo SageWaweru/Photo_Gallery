@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {% block title %}Add Profile {% endblock %}
+{% block body%}
+<form method="post" class="max-w-lg mx-auto mt-8 mb-8 shadow-lg p-4 ">
+  {% csrf_token %}
+  <div class="mb-4">
+    <label
+      for="{{ form.content.id_for_label }}"
+      class="block text-gray-700 font-bold mb-2"
+      >Bio:</label
+    >
+    {{ form.bio }}
+  </div>
+  <div class="mb-4">
+    <label
+      for="{{ form.image.id_for_label }}"
+      class="block text-gray-700 font-bold mb-2"
+      >Image:</label
+    >
+    {{ form.profile_picture }}
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-primary"
+  >
+    Save
+  </button>
+</form>
+{% endblock %}
