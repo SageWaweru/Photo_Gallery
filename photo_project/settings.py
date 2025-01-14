@@ -15,6 +15,9 @@ from decouple import config
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import os
+import dj_database_url
+
 
 
 
@@ -31,7 +34,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -87,17 +90,20 @@ WSGI_APPLICATION = 'photo_project.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'photodb',
-        'USER':'photouser',
-        'PASSWORD':config('DATABASE_PASSWORD'),
-        'HOST':'Localhost',
-        'PORT':'5432'
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME':'photodb',
+#         'USER':'photouser',
+#         'PASSWORD':config('DATABASE_PASSWORD'),
+#         'HOST':'Localhost',
+#         'PORT':'5432'
+#     }
+# }
 
+DATABASES={
+    'default': dj_database_url.parse("postgresql://sagedb_89dx_user:ri4CUpnYfySR8gT8rlwWz609dQJ8TrbH@dpg-ctucob9u0jms73f5roj0-a.oregon-postgres.render.com/sagedb_89dx")
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -133,7 +139,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = '/static/'  
+STATIC_URL = '/static/'   
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [BASE_DIR / "static"] 
 
 
